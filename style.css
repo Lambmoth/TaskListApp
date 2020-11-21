@@ -67,6 +67,7 @@ form input:hover {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	transition: all 0.5s ease;
 }
 
 .task li {
@@ -85,4 +86,68 @@ form input:hover {
 
 .complete-btn {
 	background-color: aquamarine;
+}
+
+.task-item {
+	padding: 0rem 0.5rem;
+}
+
+.fa-trash,
+.fa-check {
+	pointer-events: none;
+}
+
+.completed {
+	text-decoration: line-through;
+	opacity: 0.5;
+}
+
+.fall {
+	transform: translateY(8rem) rotateZ(20deg);
+	opacity: 0;
+}
+
+select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	outline: none;
+	border: none;
+}
+
+.select {
+	margin: 1rem;
+	position: relative;
+	overflow: hidden;
+}
+
+select {
+	color: #f80046;
+	width: 10rem;
+	cursor: pointer;
+	background: #31090c;
+	padding: 1rem;
+	font-size: 1rem;
+}
+
+select:hover {
+	background: #31090c;
+	color: #f80046;
+	transition: all 0.3s ease;
+}
+.select::after {
+	content: "\25BC";
+	position: absolute;
+	background: #f80046;
+	color: #0d001b;
+	top: 0;
+	right: 0;
+	padding: 1rem;
+	pointer-events: none;
+}
+
+.select:hover::after {
+	background: #31090c;
+	color: #f80046;
+	transition: all 0.3s ease;
 }
