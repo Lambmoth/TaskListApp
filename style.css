@@ -135,6 +135,7 @@ select:hover {
 	color: #f80046;
 	transition: all 0.3s ease;
 }
+
 .select::after {
 	content: "\25BC";
 	position: absolute;
