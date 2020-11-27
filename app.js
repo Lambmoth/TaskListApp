@@ -4,6 +4,7 @@ const taskButton = document.querySelector('.task-button');
 const taskList = document.querySelector('.task-list');
 const filterOption = document.querySelector('.filter-tasks');
 //Event Listeners
+document.addEventListener('DOMContentLoaded', getTasks);
 taskButton.addEventListener('click', addTask);
 taskList.addEventListener('click', deleteCheck);
 filterOption.addEventListener('click', filterTasks);
@@ -22,6 +23,8 @@ function addTask(event){
     newTask.innerText = taskInput.value;
     newTask.classList.add('task-item');
     taskDiv.appendChild(newTask);
+    //ADD Task to Local Storage
+    saveLocalTodos(taskInput.value);
     //Check Mark Button
     const completedButton = document.createElement('button');
     completedButton.innerHTML = '<i class="fas fa-check"></i>';
@@ -75,7 +78,7 @@ function filterTasks(event){
                 }
                 break;
             case "not-completed":
-                if(task.classList.contains('not-completed')){
+                if(!task.classList.contains('completed')){
                     task.style.display = 'flex';
                 }
                 else{
@@ -84,5 +87,50 @@ function filterTasks(event){
                 break;
 
         }
+    });
+}
+
+function saveLocalTodos(task){
+    //Check for previous tasks
+    let tasks;
+    if(localStorage.getItem('tasks') === null){
+        tasks = [];
+    }else{
+        tasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+    tasks.push(task);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function getTasks(){
+    let tasks;
+    // Check for previous tasks
+    if (localStorage.getItem("tasks") === null) {
+        tasks = [];
+    } else {
+        tasks = JSON.parse(localStorage.getItem("tasks"));
+    }
+    tasks.forEach(function(task){
+        //Task Div
+        const taskDiv = document.createElement("div");
+        taskDiv.classList.add("task");
+        //Create LI
+        const newTask = document.createElement('li');
+        newTask.innerText = task;
+        newTask.classList.add('task-item');
+        taskDiv.appendChild(newTask);
+
+        //Check Mark Button
+        const completedButton = document.createElement('button');
+        completedButton.innerHTML = '<i class="fas fa-check"></i>';
+        completedButton.classList.add("complete-btn");
+        taskDiv.appendChild(completedButton);
+        //Delete Button
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
+        deleteButton.classList.add("trash-btn");
+        taskDiv.appendChild(deleteButton);
+        //APPEND TO LIST
+        taskList.appendChild(taskDiv);  
     });
 }
