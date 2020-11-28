@@ -42,13 +42,14 @@ function addTask(event){
 }
 
 function deleteCheck(event){
-    //console.log(event.target)
+    console.log(event.target);
     const item = event.target;
     //DELETE TASK
     if(item.classList[0] === "trash-btn"){
         const task = item.parentElement;
         //Animate delete
         task.classList.add("fall");
+        removeLocalTasks(task);
         task.addEventListener('transitionend', function(){
             task.remove();
         });
@@ -133,4 +134,19 @@ function getTasks(){
         //APPEND TO LIST
         taskList.appendChild(taskDiv);  
     });
+}
+
+function removeLocalTasks(task){
+    let tasks;
+    // Check for previous tasks
+    if (localStorage.getItem("tasks") === null) {
+        tasks = [];
+    } else {
+        tasks = JSON.parse(localStorage.getItem("tasks"));
+    }
+    console.log(task);
+    console.log(tasks);
+    const taskIndex = task.children[0].innerText;
+    tasks.splice(tasks.indexOf(taskIndex),1);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
 }
